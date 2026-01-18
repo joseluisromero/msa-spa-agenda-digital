@@ -1,0 +1,127 @@
+<div class="flex-center min-h-screen py-6">
+  <div class="card w-full max-w-md md:max-w-lg animate-slide-up">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="heading-lg text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-2">
+        Agenda Digital
+      </h1>
+      <h2 class="heading-sm text-gray-600">Crear Cuenta</h2>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
+      <!-- Identificación -->
+      <div class="form-group">
+        <label for="identificacion" class="form-label">Identificación</label>
+        <input 
+          id="identificacion"
+          type="text"
+          formControlName="identificacion" 
+          class="form-input"
+          placeholder="Ej: 1234567890"
+        />
+      </div>
+
+      <!-- Nombres -->
+      <div class="form-group">
+        <label for="nombres" class="form-label">Nombres</label>
+        <input 
+          id="nombres"
+          type="text"
+          formControlName="nombres" 
+          class="form-input"
+          placeholder="Tus nombres"
+        />
+      </div>
+
+      <!-- Apellidos -->
+      <div class="form-group">
+        <label for="apellidos" class="form-label">Apellidos</label>
+        <input 
+          id="apellidos"
+          type="text"
+          formControlName="apellidos" 
+          class="form-input"
+          placeholder="Tus apellidos"
+        />
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input 
+          id="email"
+          type="email"
+          formControlName="email" 
+          class="form-input"
+          placeholder="tu@email.com"
+        />
+      </div>
+
+      <!-- Username -->
+      <div class="form-group">
+        <label for="username" class="form-label">Usuario</label>
+        <input 
+          id="username"
+          type="text"
+          formControlName="username" 
+          class="form-input"
+          placeholder="Nombre de usuario"
+        />
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password" class="form-label">Contraseña</label>
+        <input 
+          id="password"
+          type="password" 
+          formControlName="password"
+          class="form-input"
+          placeholder="Mínimo 6 caracteres"
+        />
+      </div>
+
+      <!-- Roles (Hidden) -->
+      <div class="form-group">
+        <label for="roles" class="form-label">Rol Asignado</label>
+        <input 
+          id="roles"
+          type="text"
+          formControlName="roles"
+          class="form-input"
+          placeholder="ROLE_USER"
+          [disabled]="true"
+        />
+        <small class="form-hint">Se asignará automáticamente ROLE_USER</small>
+      </div>
+
+      <!-- Submit Button -->
+      <button 
+        type="submit" 
+        class="btn btn-primary w-full mt-8"
+        [disabled]="form.invalid"
+      >
+        Registrar
+      </button>
+    </form>
+
+    <!-- Success/Error Alert -->
+    <div 
+      *ngIf="message" 
+      [ngClass]="message.includes('Error') ? 'alert-error' : 'alert-success'"
+      class="alert mt-6 animate-slide-down"
+    >
+      <span class="text-lg">{{ message.includes('Error') ? '❌' : '✅' }}</span>
+      <span>{{ message }}</span>
+    </div>
+
+    <!-- Login Link -->
+    <div class="text-center mt-8 pt-6 border-t border-gray-200">
+      <p class="text-muted">
+        ¿Ya tienes cuenta? 
+        <a routerLink="/login" class="link-primary ml-1">Inicia sesión aquí</a>
+      </p>
+    </div>
+  </div>
+</div>

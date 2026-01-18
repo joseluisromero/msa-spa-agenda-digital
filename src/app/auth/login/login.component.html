@@ -1,0 +1,62 @@
+<div class="flex-center min-h-screen py-6">
+  <div class="card w-full max-w-md animate-slide-up">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="heading-lg text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-2">
+        Agenda Digital
+      </h1>
+      <h2 class="heading-sm text-gray-600">Inicia Sesión</h2>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-5">
+      <!-- User Field -->
+      <div class="form-group">
+        <label for="user" class="form-label">Usuario</label>
+        <input 
+          id="user"
+          type="text"
+          formControlName="user" 
+          class="form-input"
+          placeholder="Ingresa tu usuario"
+        />
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password" class="form-label">Contraseña</label>
+        <input 
+          id="password"
+          type="password" 
+          formControlName="password"
+          class="form-input"
+          placeholder="Ingresa tu contraseña"
+        />
+      </div>
+
+      <!-- Submit Button -->
+      <button 
+        type="submit" 
+        class="btn btn-primary w-full mt-6"
+        [disabled]="form.invalid"
+      >
+        Ingresar
+      </button>
+    </form>
+
+    <!-- Error Alert -->
+    <div *ngIf="error" class="alert alert-error mt-6 animate-shake">
+      <span class="text-xl">⚠️</span>
+      <span>{{ error }}</span>
+    </div>
+
+    <!-- Register Link -->
+    <div class="text-center mt-8 pt-6 border-t border-gray-200">
+      <p class="text-muted">
+        ¿No tienes cuenta? 
+        <a routerLink="/register" class="link-primary ml-1">Regístrate aquí</a>
+      </p>
+    </div>
+  </div>
+</div>
+

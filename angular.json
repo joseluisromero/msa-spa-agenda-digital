@@ -59,7 +59,8 @@
               "buildTarget": "msa-spa-agenda-digital:build:production"
             },
             "development": {
-              "buildTarget": "msa-spa-agenda-digital:build:development"
+              "buildTarget": "msa-spa-agenda-digital:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
