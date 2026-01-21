@@ -25,14 +25,14 @@ export class AuthService {
     console.log('URL de login: ', `${this.baseUrl}/cliente/login`);
     console.log('Payload enviado:', credentials);
     
-    return this.http.post<{ token?: string; [key: string]: any }>(`http://localhost:8080/api/cliente/login`, credentials)
+    return this.http.post<{ token?: string; [key: string]: any }>(`${this.baseUrl}/cliente/login`, credentials)
       .pipe(
         tap(res => {
           console.log('✅ Respuesta del backend:', res);
           if (res && (res as any).token) {
             localStorage.setItem('token', (res as any).token);
             localStorage.setItem('user', JSON.stringify({ user: (res as any).user, authorities: (res as any).authorities }));
-            console.log('✅ Token guardado en localStorage');
+            console.log('✅ Token guardado en localStorage:', (res as any).token.substring(0, 20) + '...');
           }
         }),
         catchError(error => {

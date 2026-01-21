@@ -1,0 +1,102 @@
+<div class="container">
+  <div class="header">
+    <h1>Mis Agendas</h1>
+    <p class="subtitle">Gestiona tus agendas y recordatorios</p>
+  </div>
+
+  <!-- Mensaje de carga -->
+  <div *ngIf="cargando" class="loading">
+    <div class="spinner"></div>
+    <p>Cargando agendas...</p>
+  </div>
+
+  <!-- Mensaje de error -->
+  <div *ngIf="error && !cargando" class="error-message">
+    <p>{{ error }}</p>
+    <button (click)="cargarAgendas()" class="retry-btn">Reintentar</button>
+  </div>
+
+  <!-- Lista de agendas vacía -->
+  <div *ngIf="!cargando && !error && agendas.length === 0" class="empty-state">
+    <p>No hay agendas registradas</p>
+  </div>
+
+  <!-- Lista de agendas -->
+  <div *ngIf="!cargando && !error && agendas.length > 0" class="agendas-grid">
+    <div *ngFor="let agenda of agendas" class="agenda-card">
+      <div class="card-header">
+        <div class="title-section">
+          <h2>{{ agenda.titulo }}</h2>
+          <span [ngClass]="obtenerColorEstado(agenda.estado)" class="status-badge">
+            {{ obtenerEstadoTexto(agenda.estado) }}
+          </span>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <p class="descripcion">{{ agenda.descripcion }}</p>
+
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Categoría:</label>
+            <span class="category-tag">{{ agenda.categoriaDto.nombre }}</span>
+          </div>
+
+          <div class="info-item">
+            <label>Responsable:</label>
+            <span>{{ agenda.clienteDto.nombres }} {{ agenda.clienteDto.apellidos }}</span>
+          </div>
+
+          <div class="info-item">
+            <label>Email:</label>
+            <span>{{ agenda.clienteDto.email }}</span>
+          </div>
+
+          <div class="info-item">
+            <label>Identificación:</label>
+            <span>{{ agenda.clienteDto.identificacion }}</span>
+          </div>
+
+          <div class="info-item">
+            <label>Fecha Creación:</label>
+            <span>{{ agenda.fechaCreacion }}</span>
+          </div>
+
+          <div class="info-item">
+            <label>Fecha Vencimiento:</label>
+            <span class="date-vencimiento">{{ agenda.fechaVencimiento }}</span>
+          </div>
+
+          <div class="info-item">
+            <label>Notificación:</label>
+            <span *ngIf="agenda.notifica" class="notification-active">
+              Habilitada - {{ agenda.diasNotifica }} días antes
+            </span>
+            <span *ngIf="!agenda.notifica" class="notification-inactive">
+              Deshabilitada
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alertas asociadas -->
+      <div *ngIf="agenda.alertaAgendaList && agenda.alertaAgendaList.length > 0" class="alerts-section">
+        <h3>Alertas Asociadas</h3>
+        <div class="alerts-list">
+          <div *ngFor="let alerta of agenda.alertaAgendaList" class="alert-item">
+            <span class="alert-icon">🔔</span>
+            <div class="alert-content">
+              <p class="alert-name">{{ alerta.nombre }}</p>
+              <p class="alert-date">{{ alerta.fechaNotifica | date : 'dd/MM/yyyy HH:mm' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button class="btn btn-primary">Editar</button>
+        <button class="btn btn-danger">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>

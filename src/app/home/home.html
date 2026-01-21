@@ -1,0 +1,90 @@
+<div class="home-container">
+  <!-- Header de Bienvenida -->
+  <div class="welcome-header">
+    <div class="header-content">
+      <h1>¡Bienvenido, {{ userName }}!</h1>
+      <p class="subtitle">Gestiona tus agendas y manténte organizado</p>
+    </div>
+  </div>
+
+  <!-- Estadísticas -->
+  <div class="stats-container">
+    <div class="stat-card">
+      <div class="stat-icon">📋</div>
+      <div class="stat-content">
+        <h3>Total de Agendas</h3>
+        <p class="stat-number">{{ stats.totalAgendas }}</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">✅</div>
+      <div class="stat-content">
+        <h3>Agendas Activas</h3>
+        <p class="stat-number">{{ stats.agendasActivas }}</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">⏰</div>
+      <div class="stat-content">
+        <h3>Por Vencer (7 días)</h3>
+        <p class="stat-number">{{ stats.proxiasAvencer }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Opciones Principales -->
+  <div class="actions-container">
+    <h2>Acciones Rápidas</h2>
+    <div class="actions-grid">
+      <div class="action-card">
+        <div class="action-icon">📝</div>
+        <h3>Ver Agendas</h3>
+        <p>Consulta y gestiona todas tus agendas</p>
+        <a routerLink="/agendas/listar" class="action-link">Ver Agendas</a>
+      </div>
+
+      <div class="action-card">
+        <div class="action-icon">➕</div>
+        <h3>Crear Agenda</h3>
+        <p>Registra una nueva agenda</p>
+        <a routerLink="/agendas/crear" class="action-link">Crear Nueva</a>
+      </div>
+
+      <div class="action-card">
+        <div class="action-icon">⚙️</div>
+        <h3>Configuración</h3>
+        <p>Ajusta tus preferencias</p>
+        <a href="#" class="action-link">Configurar</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección de Información -->
+  <div class="info-section">
+    <h2>Funcionalidades Principales</h2>
+    <div class="features-grid">
+      <div class="feature">
+        <span class="feature-icon">🔔</span>
+        <h4>Recordatorios Automáticos</h4>
+        <p>Recibe notificaciones antes de las fechas importantes</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🏷️</span>
+        <h4>Categorización</h4>
+        <p>Organiza tus agendas por categorías</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">👥</span>
+        <h4>Gestión de Contactos</h4>
+        <p>Administra información de clientes y contactos</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">📊</span>
+        <h4>Alertas Vinculadas</h4>
+        <p>Crea múltiples alertas por agenda</p>
+      </div>
+    </div>
+  </div>
+</div>

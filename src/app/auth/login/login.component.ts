@@ -22,8 +22,8 @@ export class LoginComponent {
   submit() {
     console.log('LoginComponent submit called with', this.form.value);
     this.auth.login(this.form.value).subscribe({
-      //Si éxito: Redirige a / (home)
-      next: () => this.router.navigate(['/']),
+      //Si éxito: Redirige a home
+      next: () => this.router.navigate(['/home']),
       //Si error: Muestra mensaje "Credenciales inválidas"
       error: () => this.error = 'Credenciales inválidas'
     });
