@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AgendasService } from '../../services/agendas.service';
 
@@ -45,7 +45,7 @@ export class Listar implements OnInit {
   cargando: boolean = true;
   error: string | null = null;
 
-  constructor(private agendasService: AgendasService) {}
+  constructor(private agendasService: AgendasService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.cargarAgendas();
@@ -82,12 +82,20 @@ export class Listar implements OnInit {
         console.log('✅ Total de agendas asignadas:', agendas.length);
         this.agendas = agendas;
         this.cargando = false;
+        
+        // Forzar detección de cambios
+        console.log('🔄 Forzando detección de cambios...');
+        this.cdr.detectChanges();
+        console.log('✅ Detección de cambios completada. cargando:', this.cargando);
       },
       error: (err) => {
         console.error('❌ Error al cargar agendas en el componente:', err);
         console.error('❌ Error completo:', JSON.stringify(err));
         this.error = 'Error al cargar las agendas. Por favor, intenta nuevamente.';
         this.cargando = false;
+        
+        // Forzar detección de cambios en caso de error
+        this.cdr.detectChanges();
       },
     });
   }

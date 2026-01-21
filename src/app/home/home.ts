@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AgendasService } from '../services/agendas.service';
@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   cargando: boolean = true;
   error: string | null = null;
 
-  constructor(private agendasService: AgendasService) {
+  constructor(private agendasService: AgendasService, private cdr: ChangeDetectorRef) {
     const user = localStorage.getItem('user');
     if (user) {
       try {
@@ -74,11 +74,17 @@ export class HomeComponent implements OnInit {
         }).length;
         
         this.cargando = false;
+        
+        // Forzar detección de cambios
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error al cargar estadísticas:', err);
         this.error = 'Error al cargar los datos';
         this.cargando = false;
+        
+        // Forzar detección de cambios en caso de error
+        this.cdr.detectChanges();
       },
     });
   }
