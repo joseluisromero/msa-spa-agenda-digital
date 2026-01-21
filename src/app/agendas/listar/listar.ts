@@ -54,13 +54,38 @@ export class Listar implements OnInit {
   cargarAgendas(): void {
     this.cargando = true;
     this.error = null;
+    console.log('🔄 Iniciando carga de agendas...');
+    
     this.agendasService.getAllAgendas().subscribe({
       next: (data) => {
-        this.agendas = data;
+        console.log('📦 Datos recibidos en el componente:', data);
+        console.log('📦 Tipo de datos:', typeof data);
+        console.log('📦 Es array?:', Array.isArray(data));
+        
+        // Manejo flexible de la respuesta
+        let agendas: Agenda[] = [];
+        
+        if (Array.isArray(data)) {
+          agendas = data;
+          console.log('✅ Respuesta es un array directo');
+        } else if (data && typeof data === 'object' && 'data' in data && Array.isArray(data.data)) {
+          agendas = data.data;
+          console.log('✅ Respuesta envuelta en objeto.data');
+        } else if (data && typeof data === 'object' && 'content' in data && Array.isArray(data.content)) {
+          agendas = data.content;
+          console.log('✅ Respuesta envuelta en objeto.content');
+        } else {
+          console.warn('⚠️ Estructura de respuesta desconocida:', data);
+          agendas = data || [];
+        }
+        
+        console.log('✅ Total de agendas asignadas:', agendas.length);
+        this.agendas = agendas;
         this.cargando = false;
       },
       error: (err) => {
-        console.error('Error al cargar agendas:', err);
+        console.error('❌ Error al cargar agendas en el componente:', err);
+        console.error('❌ Error completo:', JSON.stringify(err));
         this.error = 'Error al cargar las agendas. Por favor, intenta nuevamente.';
         this.cargando = false;
       },

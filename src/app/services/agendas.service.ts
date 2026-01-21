@@ -19,6 +19,8 @@ export class AgendasService {
           return throwError(() => new Error('Token no disponible'));
         }
         
+        console.log('🔐 Token encontrado:', token.substring(0, 20) + '...');
+        
         return this.http.get<any>(`${this.baseUrl}/agenda/todos`, {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -27,12 +29,22 @@ export class AgendasService {
         })
               .pipe(
                 tap(res => {
-                  console.log('✅ Respuesta del backend:', res);
-                  console.log('✅ Total de agendas obtenidas:', res.length || 0);
+                  console.log('✅ Respuesta completa del backend:', res);
+                  console.log('✅ Tipo de respuesta:', typeof res);
+                  console.log('✅ Es array?:', Array.isArray(res));
+                  
+                  // Si es un objeto con propiedad data, extrae el array
+                  if (res && typeof res === 'object' && !Array.isArray(res) && 'data' in res) {
+                    console.log('✅ Respuesta envuelta en objeto.data, extrayendo...');
+                    console.log('✅ Total de agendas obtenidas:', res.data?.length || 0);
+                  } else if (Array.isArray(res)) {
+                    console.log('✅ Total de agendas obtenidas:', res.length || 0);
+                  }
                 }),
                 catchError(error => {
                   console.error('❌ Error en la petición de agendas:', error.status, error.statusText);
                   console.error('❌ Respuesta del backend:', error.error);
+                  console.error('❌ Error completo:', error);
                   
                   // Mostrar mensaje específico según el error
                   if (error.status === 403 || error.status === 401) {
